@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("notes")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Notes" description="Notes Max is taking on various topics.">
+  <div class="max-w-3xl mx-auto px-6 py-14">
+    <h1 class="text-3xl font-semibold">Notes</h1>
+    <p class="mt-3 font-sans text-ink-soft">
+      These are notes I'm taking on various topics. They are more properly
+      defined in the negative, as "not blog posts."
+    </p>
+    <ul class="mt-8 space-y-8">
+      {notes.map((note) => (
+        <li>
+          <a href={`/notes/${note.id}`} class="group block">
+            <h2 class="text-xl font-semibold group-hover:text-accent transition-colors">
+              {note.data.title}
+            </h2>
+            {note.data.description && (
+              <p class="mt-1 font-sans text-ink-soft">{note.data.description}</p>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

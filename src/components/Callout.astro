@@ -1,0 +1,16 @@
+---
+interface Props {
+  title?: string;
+  variant?: "note" | "aside";
+}
+
+const { title, variant = "note" } = Astro.props;
+const accentColor = variant === "aside" ? "border-teal" : "border-accent";
+---
+
+<aside class:list={["my-6 rounded-lg border-l-4 bg-paper-raised/50 px-4 py-3", accentColor]}>
+  {title && <p class="font-sans text-sm font-semibold mb-1">{title}</p>}
+  <div class="font-sans text-sm text-ink-soft [&_p]:my-1">
+    <slot />
+  </div>
+</aside>

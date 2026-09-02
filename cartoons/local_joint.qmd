@@ -1,6 +1,0 @@
----
-title: "The Local Joint"
-date: "06/01/2023"
----
-
-![the local joint](https://s3.amazonaws.com/maxawall.com/cartoons/the_local_joint.jpg)

@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Blog" description="Longer-form writing from Max Wall.">
+  <div class="max-w-3xl mx-auto px-6 py-14">
+    <h1 class="text-3xl font-semibold">Blog</h1>
+    <ul class="mt-8 space-y-8">
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}`} class="group block">
+            <h2 class="text-xl font-semibold group-hover:text-accent transition-colors">
+              {post.data.title}
+            </h2>
+            {post.data.description && (
+              <p class="mt-1 font-sans text-ink-soft">{post.data.description}</p>
+            )}
+            <p class="mt-1 font-sans text-sm text-ink-soft">
+              {post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "long" })}
+            </p>
+          </a>
+        </li>
+      ))}
+      {posts.length === 0 && <p class="font-sans text-ink-soft">Nothing published yet.</p>}
+    </ul>
+  </div>
+</BaseLayout>

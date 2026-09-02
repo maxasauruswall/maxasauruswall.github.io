@@ -1,0 +1,21 @@
+---
+const links = [
+  { href: "https://github.com/maxasauruswall", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/max-wall-01067110/", label: "LinkedIn" },
+  { href: "https://julialang.social/@Maxasaurus", label: "Mastodon" },
+  { href: "mailto:mx.wall@gmail.com", label: "Email" },
+];
+---
+
+<footer class="border-t border-rule mt-16">
+  <div class="max-w-3xl mx-auto px-6 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 font-sans text-sm text-ink-soft">
+    <p>&copy; {new Date().getFullYear()} Max Wall</p>
+    <ul class="flex gap-4">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="hover:text-accent transition-colors">{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>

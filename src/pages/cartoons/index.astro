@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const cartoons = (await getCollection("cartoons")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Cartoons" description="Cartoons drawn by Max Wall.">
+  <div class="max-w-4xl mx-auto px-6 py-14">
+    <h1 class="text-3xl font-semibold">Cartoons</h1>
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {cartoons.map((cartoon) => (
+        <a
+          href={`/cartoons/${cartoon.id}`}
+          class="group block rounded-lg overflow-hidden border border-rule bg-white/40"
+        >
+          <img
+            src={cartoon.data.image}
+            alt={cartoon.data.title}
+            class="w-full h-56 object-cover group-hover:scale-[1.02] transition-transform duration-300"
+            loading="lazy"
+          />
+          <div class="px-4 py-3 font-sans">
+            <h2 class="font-medium group-hover:text-accent transition-colors">
+              {cartoon.data.title}
+            </h2>
+            <p class="text-sm text-ink-soft">
+              {cartoon.data.date.toLocaleDateString("en-US", { year: "numeric", month: "long" })}
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

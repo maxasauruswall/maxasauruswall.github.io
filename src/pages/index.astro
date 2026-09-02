@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import avatar from "../assets/avatar.jpg";
+
+const links = [
+  { href: "https://www.linkedin.com/in/max-wall-01067110/", label: "LinkedIn" },
+  { href: "https://julialang.social/@Maxasaurus", label: "Mastodon" },
+  { href: "https://github.com/maxasauruswall", label: "GitHub" },
+  { href: "mailto:mx.wall@gmail.com", label: "Email" },
+];
+---
+
+<BaseLayout title="Max Wall">
+  <div class="max-w-3xl mx-auto px-6 py-14 sm:py-20">
+    <div class="flex flex-col sm:flex-row gap-8 sm:gap-10 items-start">
+      <Image
+        src={avatar}
+        alt="Max Wall"
+        width={192}
+        height={192}
+        class="w-32 h-32 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-white shadow-sm shrink-0"
+      />
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-semibold">Max Wall</h1>
+        <p class="mt-4 text-lg leading-relaxed text-ink">
+           Vocation: Biology, Bayesian stats, software engineering. 
+           Avocations: reading, skiing, cartooning, and gardening.
+        </p>
+        <ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-sans text-sm">
+          {links.map((link) => (
+            <li>
+              <a href={link.href} class="text-accent hover:underline underline-offset-4">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

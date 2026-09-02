@@ -1,0 +1,46 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const cartoons = await getCollection("cartoons");
+  return cartoons.map((cartoon) => ({
+    params: { slug: cartoon.id },
+    props: { cartoon },
+  }));
+}
+
+interface Props {
+  cartoon: CollectionEntry<"cartoons">;
+}
+
+const { cartoon } = Astro.props;
+const { Content } = await render(cartoon);
+const formattedDate = cartoon.data.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={cartoon.data.title}>
+  <article class="max-w-3xl mx-auto px-6 py-12">
+    <a href="/cartoons" class="font-sans text-sm text-ink-soft hover:text-accent transition-colors"
+      >&larr; Cartoons</a
+    >
+    <header class="mt-6 mb-6">
+      <h1 class="text-3xl font-semibold">{cartoon.data.title}</h1>
+      <p class="mt-2 font-sans text-sm text-ink-soft">
+        <time datetime={cartoon.data.date.toISOString()}>{formattedDate}</time>
+      </p>
+    </header>
+    <img
+      src={cartoon.data.image}
+      alt={cartoon.data.title}
+      class="w-full rounded-lg border border-rule"
+    />
+    <div class="prose-post font-sans text-[1.05rem] text-ink mt-6">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

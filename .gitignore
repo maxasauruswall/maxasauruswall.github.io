@@ -1,2 +1,5 @@
-/.quarto/
-/_site/
+# astro / node
+dist/
+.astro/
+node_modules/
+npm-debug.log*
